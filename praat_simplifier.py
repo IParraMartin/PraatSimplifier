@@ -84,7 +84,7 @@ class PraatSimplifier():
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(help='Simplified code to extract formant values in a .csv file.')
+    parser = argparse.ArgumentParser(description='Simplified code to extract formant values in a .csv file.')
     parser.add_argument('--sounds_dir', type=str, required=True, help='Directory to your sound files.')
     parser.add_argument('--n_timestamps', type=int, required=True, help='Number of timestamps to extract the formants from.')
     parser.add_argument('--n_formants', type=int, required=True, help='Number of formants to extract.')
