@@ -124,6 +124,7 @@ class PraatSimplifier():
         
 
 if __name__ == "__main__":
+    
     parser = argparse.ArgumentParser(description='Simplified code to extract formant values in a .csv file.')
     parser.add_argument('--sounds_dir', type=str, required=True, help='Directory to your sound files.')
     parser.add_argument('--n_timestamps', type=int, required=False, help='Number of timestamps to extract the formants from.')
@@ -142,3 +143,9 @@ if __name__ == "__main__":
     )
     
     simplifier.export_formants(out_dir=args.out_dir)
+
+    if args.save_plot:
+        if args.plot_out_dir:
+            simplifier.plot_formants(plot_out_dir=args.plot_out_dir)
+        else:
+            print("Plotting is enabled but no plot output directory was provided.")
