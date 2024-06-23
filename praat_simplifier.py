@@ -19,7 +19,7 @@ class PraatSimplifier():
         self.n_formants = None
         self.f_data = []
 
-    def get_formants(self, in_dir: str, n_timestamps: int, n_formants: int) -> list:
+    def get_formants(self, in_dir: str, n_timestamps: int = 10, n_formants: int = 3) -> list:
         
         """
         Extract formants from audio files in the specified directory.
