@@ -1,4 +1,5 @@
 import parselmouth
+import matplotlib.pyplot as plt
 import os
 import numpy as np
 import pandas as pd
@@ -18,6 +19,7 @@ class PraatSimplifier():
         self.n_timestamps = None
         self.n_formants = None
         self.f_data = []
+
 
     def get_formants(self, in_dir: str, n_timestamps: int = 10, n_formants: int = 3) -> list:
         
@@ -64,6 +66,7 @@ class PraatSimplifier():
 
         return self.f_data
     
+
     def export_formants(self, out_dir: str = None):
         
         """
@@ -83,12 +86,51 @@ class PraatSimplifier():
         print(f'File saved to {file_path}')
 
 
+    def plot_formants(self, plot_out_dir: str = './', save_plot: bool = False):
+
+        """
+        Plot the extracted F-values by sound (maximum of 9 for clarity.)
+        """
+
+        if not self.f_data:
+            print('No formant data. Run get_formants() first.')
+            return
+
+        unique_sounds = min(len(set(d['sound'] for d in self.f_data)), 9)
+        nrows = np.ceil(unique_sounds / 3).astype(int)
+        
+        fig, axs = plt.subplots(nrows, 3, figsize=(10, nrows * 3))
+        fig.tight_layout(pad=3)
+
+        axs = axs.flatten()
+
+        for ax, (sound, df) in zip(axs, pd.DataFrame(self.f_data).groupby('sound')):
+            for i in range(1, self.n_formants + 1):
+                ax.plot(df['time'], df[f'F{i}'], label=f'F{i}')
+            ax.set_title(sound, fontsize=10)
+            ax.set_xlabel('Time (s)', fontsize=10)
+            ax.set_ylabel('Frequency (Hz)', fontsize=10)
+            ax.tick_params(axis='x', labelsize=8)
+            ax.tick_params(axis='y', labelsize=8)
+            ax.legend(fontsize=8)
+
+        for i in range(unique_sounds, len(axs)):
+            axs[i].set_visible(False)
+
+        plt.show()
+
+        if save_plot:
+            plt.savefig(f'{plot_out_dir}/formant_plots.png', dpi=1200)
+        
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Simplified code to extract formant values in a .csv file.')
     parser.add_argument('--sounds_dir', type=str, required=True, help='Directory to your sound files.')
-    parser.add_argument('--n_timestamps', type=int, required=True, help='Number of timestamps to extract the formants from.')
-    parser.add_argument('--n_formants', type=int, required=True, help='Number of formants to extract.')
+    parser.add_argument('--n_timestamps', type=int, required=False, help='Number of timestamps to extract the formants from.')
+    parser.add_argument('--n_formants', type=int, required=False, help='Number of formants to extract.')
     parser.add_argument('--out_dir', type=str, required=True, help='Output directory for the .csv file.')
+    parser.add_argument('--save_plot', type=bool, required=False, help='Output directory for the .csv file.')
+    parser.add_argument('--plot_out_dir', type=str, required=False, help='Output directory for the .csv file.')
     args = parser.parse_args()
 
     simplifier = PraatSimplifier()
