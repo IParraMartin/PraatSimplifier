@@ -120,15 +120,24 @@ class PraatSimplifier():
         plt.show()
 
         if save_plot:
-            plt.savefig(f'{plot_out_dir}/formant_plots.png', dpi=1200)
+            if not os.path.exists(plot_out_dir):
+                os.makedirs(plot_out_dir)
+            
+            file_path = os.path.join(plot_out_dir, 'formant_plots.png')
+            
+            try:
+                plt.savefig(file_path, dpi=1200)
+                print(f"Plot saved successfully to {file_path}")
+            except Exception as e:
+                print(f"Failed to save the plot: {e}")
         
 
 if __name__ == "__main__":
-    
+
     parser = argparse.ArgumentParser(description='Simplified code to extract formant values in a .csv file.')
     parser.add_argument('--sounds_dir', type=str, required=True, help='Directory to your sound files.')
-    parser.add_argument('--n_timestamps', type=int, required=False, help='Number of timestamps to extract the formants from.')
-    parser.add_argument('--n_formants', type=int, required=False, help='Number of formants to extract.')
+    parser.add_argument('--n_timestamps', type=int, required=True, help='Number of timestamps to extract the formants from.')
+    parser.add_argument('--n_formants', type=int, required=True, help='Number of formants to extract.')
     parser.add_argument('--out_dir', type=str, required=True, help='Output directory for the .csv file.')
     parser.add_argument('--save_plot', type=bool, required=False, help='Output directory for the .csv file.')
     parser.add_argument('--plot_out_dir', type=str, required=False, help='Output directory for the .csv file.')
