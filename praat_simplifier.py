@@ -138,7 +138,7 @@ if __name__ == "__main__":
     parser.add_argument('--sounds_dir', type=str, required=True, help='Directory to your sound files.')
     parser.add_argument('--n_timestamps', type=int, required=True, help='Number of timestamps to extract the formants from.')
     parser.add_argument('--n_formants', type=int, required=True, help='Number of formants to extract.')
-    parser.add_argument('--out_dir', type=str, required=True, help='Output directory for the .csv file.')
+    parser.add_argument('--out_dir', type=str, required=False, help='Output directory for the .csv file.')
     parser.add_argument('--save_plot', type=bool, required=False, help='Output directory for the .csv file.')
     parser.add_argument('--plot_out_dir', type=str, required=False, help='Output directory for the .csv file.')
     args = parser.parse_args()
