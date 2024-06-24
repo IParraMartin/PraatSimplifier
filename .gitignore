@@ -1,6 +1,7 @@
 #specfiles
 logo.png
+formants.csv
+.DS_Store
 
 #folders
 resources/
-

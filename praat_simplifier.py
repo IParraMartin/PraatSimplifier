@@ -117,8 +117,6 @@ class PraatSimplifier():
         for i in range(unique_sounds, len(axs)):
             axs[i].set_visible(False)
 
-        plt.show()
-
         if save_plot:
             if not os.path.exists(plot_out_dir):
                 os.makedirs(plot_out_dir)
@@ -130,17 +128,19 @@ class PraatSimplifier():
                 print(f"Plot saved successfully to {file_path}")
             except Exception as e:
                 print(f"Failed to save the plot: {e}")
+
+        plt.show()
         
 
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description='Simplified code to extract formant values in a .csv file.')
     parser.add_argument('--sounds_dir', type=str, required=True, help='Directory to your sound files.')
-    parser.add_argument('--n_timestamps', type=int, required=True, help='Number of timestamps to extract the formants from.')
-    parser.add_argument('--n_formants', type=int, required=True, help='Number of formants to extract.')
-    parser.add_argument('--out_dir', type=str, required=False, help='Output directory for the .csv file.')
-    parser.add_argument('--save_plot', type=bool, required=False, help='Output directory for the .csv file.')
-    parser.add_argument('--plot_out_dir', type=str, required=False, help='Output directory for the .csv file.')
+    parser.add_argument('--n_timestamps', type=int, required=False, default=10, help='Number of timestamps to extract the formants from.')
+    parser.add_argument('--n_formants', type=int, required=False, default=3, help='Number of formants to extract.')
+    parser.add_argument('--out_dir', type=str, required=False, default='./', help='Output directory for the .csv file.')
+    parser.add_argument('--save_plot', type=bool, required=False, default=False, help='Output directory for the .csv file.')
+    parser.add_argument('--plot_out_dir', type=str, required=False, default='./', help='Output directory for the .csv file.')
     args = parser.parse_args()
 
     simplifier = PraatSimplifier()
@@ -154,7 +154,5 @@ if __name__ == "__main__":
     simplifier.export_formants(out_dir=args.out_dir)
 
     if args.save_plot:
-        if args.plot_out_dir:
-            simplifier.plot_formants(plot_out_dir=args.plot_out_dir)
-        else:
-            print("Plotting is enabled but no plot output directory was provided.")
+        plot_out_dir = args.plot_out_dir if args.plot_out_dir else './'
+        simplifier.plot_formants(plot_out_dir=plot_out_dir, save_plot=True)
