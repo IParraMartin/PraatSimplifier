@@ -86,7 +86,7 @@ class PraatSimplifier():
         print(f'File saved to {file_path}')
 
 
-    def plot_formants(self, plot_out_dir: str = './', save_plot: bool = False):
+    def plot_formants(self, plot_out_dir: str = './', save_plot: bool = False, dpi: int = 1200):
 
         """
         Plot the extracted F-values by sound (maximum of 9 for clarity.)
@@ -120,11 +120,9 @@ class PraatSimplifier():
         if save_plot:
             if not os.path.exists(plot_out_dir):
                 os.makedirs(plot_out_dir)
-            
             file_path = os.path.join(plot_out_dir, 'formant_plots.png')
-            
             try:
-                plt.savefig(file_path, dpi=1200)
+                plt.savefig(file_path, dpi=dpi)
                 print(f"Plot saved successfully to {file_path}")
             except Exception as e:
                 print(f"Failed to save the plot: {e}")
@@ -139,8 +137,9 @@ if __name__ == "__main__":
     parser.add_argument('--n_timestamps', type=int, required=False, default=10, help='Number of timestamps to extract the formants from.')
     parser.add_argument('--n_formants', type=int, required=False, default=3, help='Number of formants to extract.')
     parser.add_argument('--out_dir', type=str, required=False, default='./', help='Output directory for the .csv file.')
-    parser.add_argument('--save_plot', type=bool, required=False, default=False, help='Output directory for the .csv file.')
+    parser.add_argument('--save_plot', type=bool, required=False, default=False, help='True = save plot; False = do not save')
     parser.add_argument('--plot_out_dir', type=str, required=False, default='./', help='Output directory for the .csv file.')
+    parser.add_argument('--dpi', type=int, required=False, default=1200, help='Quality of plot.')
     args = parser.parse_args()
 
     simplifier = PraatSimplifier()
@@ -155,4 +154,4 @@ if __name__ == "__main__":
 
     if args.save_plot:
         plot_out_dir = args.plot_out_dir if args.plot_out_dir else './'
-        simplifier.plot_formants(plot_out_dir=plot_out_dir, save_plot=True)
+        simplifier.plot_formants(plot_out_dir=plot_out_dir, save_plot=True, dpi=args.dpi)
