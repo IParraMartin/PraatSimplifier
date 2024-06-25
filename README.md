@@ -13,6 +13,7 @@ PraatSimplifier is a Python tool designed to simplify the extraction of formant 
 - Customizable Formants: Specify the number of formants to extract.
 - CSV Export: Export the extracted formant data to a CSV file for easy analysis.
 - Plot Formants: Plot the sound files and export them in a .png image file.
+- Mono converter: Save all sounds to mono.
 - More features to be released!
 
 ## 👨🏽‍💻 Installation
@@ -29,10 +30,12 @@ You can use the tool directly from the command line. Below is an example of how 
 python PraatSimplifier.py \
 --sounds_dir=path/to/sound/files \
 --out_dir=path/to/output/directory \
---n_timestamps 10 \
+--get_formants=True \
+--n_timestamps=10 \
 --n_formants=3 \
+--export_formants_file=True\
 --save_plot=True \
---dpi=1200 \
+--dpi=300 \
 --save_to_mono=False
 ```
 Some users may need to use  ```python3``` instead of ```python``` to run the script above. The plotting tool has been limited to a maximum of 9 plots. This was a measure to prevent a lack of visibility of the data in the plots. To make several plots you will have to make independent processes (e.g., for 18 sounds, make 2 files and run the scripts independently).
