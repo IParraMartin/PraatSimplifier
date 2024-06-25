@@ -28,12 +28,12 @@ You can use the tool directly from the command line. Below is an example of how 
 ```
 python PraatSimplifier.py \
 --sounds_dir=path/to/sound/files \
+--out_dir=path/to/output/directory \
 --n_timestamps 10 \
 --n_formants=3 \
---out_dir=path/to/output/directory \
 --save_plot=True \
---plot_out_dir=path/to/out_dir_for_plot \
---dpi=1200
+--dpi=1200 \
+--save_to_mono=False
 ```
 Some users may need to use  ```python3``` instead of ```python``` to run the script above. The plotting tool has been limited to a maximum of 9 plots. This was a measure to prevent a lack of visibility of the data in the plots. To make several plots you will have to make independent processes (e.g., for 18 sounds, make 2 files and run the scripts independently).
 
@@ -42,9 +42,9 @@ Alternatively, you can integrate PraatSimplifier into your Python code:
 ```
 from PraatSimplifier import PraatSimplifier
 
-simplifier = PraatSimplifier()
-formant_data = simplifier.get_formants(in_dir='path/to/sound/files', n_timestamps=100, n_formants=5)
-simplifier.export_formants(out_dir='path/to/output/directory')
+simplifier = PraatSimplifier(sounds_dir, out_dir)
+formant_data = simplifier.get_formants(n_timestamps=100, n_formants=5)
+simplifier.export_formants()
 ```
 
 ## 📦 Dependencies
