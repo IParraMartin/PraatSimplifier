@@ -1,15 +1,13 @@
-import parselmouth
-import matplotlib.pyplot as plt
 import os
-import numpy as np
-import pandas as pd
 import argparse
-
 
 try:
     import parselmouth
+    import matplotlib.pyplot as plt
+    import numpy as np
+    import pandas as pd
 except ImportError as e:
-    print(f'{e}\nParselmouth is required. Try <pip install praat-parselmouth>')
+    print(f'{e}\nInstall the required dependencies. Run requirements.txt')
 
 
 class PraatSimplifier():
@@ -36,7 +34,6 @@ class PraatSimplifier():
                 mono_signal.save(output_path, format='WAV')
                 print(f'Mono sound saved to {output_path}')
         print('Done.')
-        return mono_signal
 
 
     def get_formants(self, n_timestamps: int = 10, n_formants: int = 3) -> list:
@@ -45,7 +42,6 @@ class PraatSimplifier():
         Extract formants from audio files in the specified directory.
 
         Parameters:
-        in_dir (str): The input directory containing the .wav files.
         n_timestamps (int): The number of timestamps to sample per file.
         n_formants (int): The number of formants to extract.
 
@@ -74,7 +70,7 @@ class PraatSimplifier():
                         formant_value = formant.get_value_at_time(i, time)
                         formant_data[f'F{i}'] = round(formant_value, 3) if formant_value is not None else None
                     self.f_data.append(formant_data)
-
+        
         return self.f_data
     
 
@@ -82,9 +78,6 @@ class PraatSimplifier():
         
         """
         Export the extracted formant data to a CSV file.
-
-        Parameters:
-        out_dir (str): The output directory for the CSV file. Defaults to the current directory.
         """
         
         if not self.f_data:
@@ -155,12 +148,8 @@ if __name__ == "__main__":
 
     simplifier = PraatSimplifier(args.in_dir, args.out_dir)
 
-    formants = simplifier.get_formants(
-        in_dir=args.sounds_dir,
-        n_formants=args.n_formants,
-        n_timestamps=args.n_timestamps
-    )
-    
+    formants = simplifier.get_formants(n_formants=args.n_formants, n_timestamps=args.n_timestamps)
+
     simplifier.export_formants(out_dir=args.out_dir)
 
     if args.save_plot:
