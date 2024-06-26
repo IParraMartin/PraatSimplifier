@@ -48,11 +48,13 @@ class PraatSimplifier():
         
         self.n_timestamps = n_timestamps
         self.n_formants = n_formants
-        self.f_data = []
 
+        self.f_data = []
+        
         for file in os.listdir(self.in_dir):
             if file.endswith('.wav'):
                 print(f'Analyzing {file}...')
+
                 sound = parselmouth.Sound(os.path.join(self.in_dir, file))
                 sound = sound.convert_to_mono()
                 dur = sound.get_total_duration()
