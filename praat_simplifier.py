@@ -7,7 +7,7 @@ try:
     import numpy as np
     import pandas as pd
 except ImportError as e:
-    print(f'{e}\nInstall the required dependencies. Run requirements.txt')
+    print(f'{e}. Install the required dependencies. Try: <pip install -r requirements.txt>')
 
 
 class PraatSimplifier():
@@ -15,9 +15,6 @@ class PraatSimplifier():
     def __init__(self, in_dir: str, out_dir: str):
         self.in_dir = in_dir
         self.out_dir = out_dir
-        self.n_timestamps = None
-        self.n_formants = None
-        self.f_data = []
 
 
     def save_to_mono(self):
