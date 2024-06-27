@@ -118,14 +118,15 @@ class PraatSimplifier():
             plt.ylabel('Amplitude')
             plt.title('Sound Wave')
             plt.grid(True, alpha=0.5)
+
             if save_amplitude_plot:
                 if not os.path.exists(self.out_dir):
                     os.makedirs(self.out_dir)
                 plt.savefig(os.path.join(self.out_dir, 'amplitude_plot.png'), dpi=1200)
+            
             plt.show()
         except Exception as e:
             print(f'An error occurred: {e}')
-
 
 
     def plot_formants(self, save_formant_plot: bool = False, dpi: int = 1200):
@@ -173,7 +174,7 @@ class PraatSimplifier():
         
 
 if __name__ == "__main__":
-    
+
     parser = argparse.ArgumentParser(description='Simplified code to extract formant values in a .csv file.')
     parser.add_argument('--in_dir', type=str, required=True, help='Directory to your sound files.')
     parser.add_argument('--out_dir', type=str, required=False, default='./', help='Output directory for the .csv file.')
