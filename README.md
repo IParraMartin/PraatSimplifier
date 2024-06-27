@@ -30,20 +30,43 @@ pip install -r requirements.txt
 ```
 
 ## 🔥 Usage
-### Command Line Interface (CLI)
-You can use the tool directly from the command line. Below is an example of how to use the CLI:
+### Examples: Command Line Interface (CLI)
+Clone this repository to your local machine and access it from the command line:
 ```
-python PraatSimplifier.py \
---sounds_dir=path/to/sound/files \
---out_dir=path/to/output/directory \
---get_formants=True \
---n_timestamps=10 \
---n_formants=3 \
---export_formants_file=True\
---save_plot=True \
---dpi=300 \
---save_to_mono=False
+git clone https://github.com/IParraMartin/PraatSimplifier.git
+cd PraatSimplifier
 ```
+
+To produce a formant plot and extract the data in a ```.csv``` file, you can use the code below in the terminal or command line:
+```
+python praat_simplifier.py \
+--in_dir path/to/sound/files \
+--out_dir path/to/output/directory \
+--get_formants True \
+--n_timestamps 10 \
+--n_formants 3 \
+--export_formants_file True\
+--save_formant_plot True \
+--dpi 300
+```
+
+To save all the sounds from a directory to mono, you can use:
+```
+--in_dir path/to/sound/files \
+--out_dir path/to/output/directory \
+--save_to_mono True
+```
+
+To plot the sound amplitude of a sound file use:
+```
+--sound_dir path/to/sound/file \
+--out_dir path/to/output/directory \
+--plot_sound_amplitude True \
+--start_time 0.0 \
+--end_time 0.5 \
+--save_amplitude_plot True
+```
+
 Some users may need to use  ```python3``` instead of ```python``` to run the script above. The plotting tool has been limited to a maximum of 9 plots. This was a measure to prevent a lack of visibility of the data in the plots. To make several plots you will have to make independent processes (e.g., for 18 sounds, make 2 files and run the scripts independently).
 
 ### Python
