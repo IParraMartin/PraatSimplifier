@@ -2,6 +2,7 @@
 logo.png
 formants.csv
 .DS_Store
+foo.py
 
 #folders
 resources/
