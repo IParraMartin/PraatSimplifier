@@ -200,9 +200,9 @@ if __name__ == "__main__":
     parser.add_argument('--start_time', type=float, required=False, help='Start time to plot.')
     parser.add_argument('--end_time', type=float, required=False, help='End time to plot.')
     parser.add_argument('--save_amplitude_plot', type=bool, required=False, default=False, help='Save amplitude plot.')
-    
-    args = parser.parse_args()
 
+    args = parser.parse_args()
+ 
     simplifier = PraatSimplifier(args.in_dir, args.out_dir)
 
     if args.get_formants:
