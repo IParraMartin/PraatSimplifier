@@ -120,6 +120,7 @@ class PraatSimplifier():
             plt.grid(True, alpha=0.5)
 
             if save_amplitude_plot:
+                assert self.out_dir, 'Specify --out_dir to save the plot.'
                 if not os.path.exists(self.out_dir):
                     os.makedirs(self.out_dir)
                 plt.savefig(os.path.join(self.out_dir, 'amplitude_plot.png'), dpi=1200)
@@ -176,23 +177,30 @@ class PraatSimplifier():
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description='Simplified code to extract formant values in a .csv file.')
-    parser.add_argument('--in_dir', type=str, required=True, help='Directory to your sound files.')
+    """
+    Args for formant analysis
+    """
+    parser.add_argument('--in_dir', type=str, required=False, help='Directory to your sound files.')
     parser.add_argument('--out_dir', type=str, required=False, default='./', help='Output directory for the .csv file.')
     parser.add_argument('--get_formants', type=bool, required=False, default=False, help='Analyze formants.')
     parser.add_argument('--n_timestamps', type=int, required=False, default=10, help='Number of timestamps to extract the formants from.')
     parser.add_argument('--n_formants', type=int, required=False, default=3, help='Number of formants to extract.')
     parser.add_argument('--export_formants_file', type=bool, required=False, default=False, help='Export .csv with formants.')
-
     parser.add_argument('--save_formant_plot', type=bool, required=False, default=False, help='True = save plot; False = do not save')
     parser.add_argument('--dpi', type=int, required=False, default=300, help='Quality of plot.')
-
+    """
+    Args for audio transformantion
+    """
     parser.add_argument('--save_to_mono', type=bool, required=False, default=False, help='Save to mono all the sounds in the in_dir.')
-
+    """
+    Args for sound amplitude ploting.
+    """
     parser.add_argument('--plot_sound_amplitude', type=bool, required=False, default=False, help='Plot a sound amplitude.')
     parser.add_argument('--sound_dir', type=str, required=False, help='Path to the sound file for plotting amplitude.')
     parser.add_argument('--start_time', type=float, required=False, help='Start time to plot.')
     parser.add_argument('--end_time', type=float, required=False, help='End time to plot.')
     parser.add_argument('--save_amplitude_plot', type=bool, required=False, default=False, help='Save amplitude plot.')
+    
     args = parser.parse_args()
 
     simplifier = PraatSimplifier(args.in_dir, args.out_dir)
